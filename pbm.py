@@ -113,7 +113,11 @@ def main(formula, element):
             elementmw = float(improvedmw.main(element))
             count += sum(countinside)
             elementmw = elementmw * count
-            pbm = (elementmw / totalmw) * 100
-            pbm = round(pbm, 3)
-            return pbm, elementmw
+            if elementmw == 0:
+                print("It seems that you have not chosen an element which is part of the formula.")
+                return -4
+            else:
+                pbm = (elementmw / totalmw) * 100
+                pbm = round(pbm, 3)
+                return pbm, elementmw
 
