@@ -8,7 +8,7 @@ def main():
     mw = improvedmw.main(f"{sys.argv[1]}")
     if len(sys.argv) == 3:
         # uses molecular weight function to calculate molecular weight of the inputted formula
-        if sys.argv[2].lower == "mw":
+        if sys.argv[2].lower() == "mw":
             if mw < 0:
                 return
             else:
