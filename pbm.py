@@ -54,7 +54,7 @@ def main(formula, element):
                 while (k + 1) < formlen:
                     if formula[k:(k + 2)] == element:
                         # checks if the element doesn't have a subscript
-                        if (k + 1) == formlen or formula[k + 2].isalpha() or formula[k + 2] == ")" or formula[k + 2] == "(":
+                        if (k + 1) == formlen - 1 or formula[k + 2].isalpha() or formula[k + 2] == ")" or formula[k + 2] == "(":
                             # checks if its within ()
                             if parencheck(k, 2, formlen, formula) == False:
                                 count += 1
@@ -80,9 +80,9 @@ def main(formula, element):
             elif elementlen == 1:
                 # count how many times the part comes up in the formula
                 while k < formlen:
-                    if formula[k] == element and (k == formlen or formula[k + 1].isupper() or formula[k + 1] == ")" or formula[k + 1].isnumeric()) or formula[k + 2] == "(":
+                    if formula[k] == element and (k == formlen - 1 or formula[k + 1].isupper() or formula[k + 1] == ")" or formula[k + 1].isnumeric() or formula[k + 1] == "("):
                         # checks if the element doesn't have a subscript
-                        if k == formlen or formula[k + 1].isalpha() or formula[k + 1] == ")" or formula[k + 2] == "(":
+                        if k == formlen - 1 or formula[k + 1].isalpha() or formula[k + 1] == ")" or formula[k + 1] == "(":
                             # checks if its within ()
                             if parencheck(k, 1, formlen, formula) == False:
                                 count += 1
