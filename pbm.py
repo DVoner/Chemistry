@@ -32,7 +32,7 @@ def parensub(k, elementlen, formlen, formula):
 
 
 
-def main(formula, element):
+def main(formula, element, lib):
     formlen = len(formula)
     elementlen = len(element)
     if elementlen > formlen:
@@ -119,8 +119,8 @@ def main(formula, element):
 
 
 
-            totalmw = float(improvedmw.main(formula))
-            elementmw = float(improvedmw.main(element))
+            totalmw = float(improvedmw.main(formula, lib))
+            elementmw = float(improvedmw.main(element, lib))
             count += sum(countinside)
             elementmw = elementmw * count
             if elementmw == 0:
