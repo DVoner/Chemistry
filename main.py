@@ -22,7 +22,7 @@ def main():
             if mw < 0:
                 return
             else:
-                gram = grams.main(f"{sys.argv[1]}", f"{int(sys.argv[3])}")
+                gram = grams.main(f"{sys.argv[1]}", f"{int(sys.argv[3])}", 1)
                 gram = "{:.3f}".format(gram)
                 print(f"{gram} grams")
         elif sys.argv[2].lower() == "moles" or sys.argv[2].lower == "m":
@@ -30,7 +30,7 @@ def main():
             if mw < 0:
                 return
             else:
-                mole = moles.main(f"{sys.argv[1]}", f"{int(sys.argv[3])}")
+                mole = moles.main(f"{sys.argv[1]}", f"{int(sys.argv[3])}", 1)
                 mole = "{:.3f}".format(mole)
                 print(f"{mole} moles")
         elif sys.argv[2].lower() == "pbm":
@@ -38,12 +38,12 @@ def main():
             if mw < 0:
                 return
             else:
-                percent, elementmw = pbm.main(f"{sys.argv[1]}", f"{sys.argv[3]}")
+                percent, elementmw = pbm.main(f"{sys.argv[1]}", f"{sys.argv[3]}", 1)
                 if percent < 0:
                     return
                 else:
                     percent = "{:.3f}".format(percent)
-                    formulamw = improvedmw.main(f"{sys.argv[1]}")
+                    formulamw = improvedmw.main(f"{sys.argv[1]}", 1)
                     formulamw = "{:.3f}".format(formulamw)
                     elementmw = "{:.3f}".format(elementmw)
                     print(f"{percent}% ({elementmw} g/mol out of {formulamw} g/mol)")
@@ -68,7 +68,7 @@ def main():
             if mw < 0:
                 return
             else:
-                gram = grams.main(f"{sys.argv[1]}", f"{int(sys.argv[3])}")
+                gram = grams.main(f"{sys.argv[1]}", f"{int(sys.argv[3])}", 2)
                 gram = "{:.3f}".format(gram)
                 print(f"{gram} grams")
         elif sys.argv[2].lower() == "moles" or sys.argv[2].lower == "m":
@@ -76,7 +76,7 @@ def main():
             if mw < 0:
                 return
             else:
-                mole = moles.main(f"{sys.argv[1]}", f"{int(sys.argv[3])}")
+                mole = moles.main(f"{sys.argv[1]}", f"{int(sys.argv[3])}", 2)
                 mole = "{:.3f}".format(mole)
                 print(f"{mole} moles")
         elif sys.argv[2].lower() == "pbm":
@@ -84,12 +84,12 @@ def main():
             if mw < 0:
                 return
             else:
-                percent, elementmw = pbm.main(f"{sys.argv[1]}", f"{sys.argv[3]}")
+                percent, elementmw = pbm.main(f"{sys.argv[1]}", f"{sys.argv[3]}", 2)
                 if percent < 0:
                     return
                 else:
                     percent = "{:.3f}".format(percent)
-                    formulamw = improvedmw.main(f"{sys.argv[1]}")
+                    formulamw = improvedmw.main(f"{sys.argv[1]}", 2)
                     formulamw = "{:.3f}".format(formulamw)
                     elementmw = "{:.3f}".format(elementmw)
                     print(f"{percent}% ({elementmw} g/mol out of {formulamw} g/mol)")
