@@ -24,7 +24,10 @@ def parensub(k, elementlen, formlen, formula):
     l = k + elementlen
     while l < formlen:
         if formula[l] == ")":
-            return int(formula[l + 1])
+            if l + 1 == formlen - 1 or not formula[l + 2].isnumeric():
+                return int(formula[l + 1])
+            elif formula[l + 2].isnumeric():
+                return int(formula[l + 1:l + 3])
         l += 1
 
 
@@ -34,14 +37,15 @@ def main(formula, element):
     elementlen = len(element)
     if elementlen > formlen:
         print("Error in defining the formula or the element that you are calculating for")
-        return -1
+        return -1, None
     elif (elementlen < 1 and elementlen > 2) or (elementlen == 2 and element[1].isupper()):
         print("You may only select one element at a time to find the percent by mass")
+        return -2, None
     else:
-        # checks if the part includes any subscripts
+        # checks if the element includes any subscripts
         if subcheck(elementlen, element) == True:
             print("You have included a subscript in the element you are calulating for. Please do not do that; this program will calculate the entire percent by mass of whatever element you are looking for.")
-            return -2
+            return -3, None
         else:
             # if we've gotten to this point there are no subscripts
             count = 0
@@ -65,7 +69,10 @@ def main(formula, element):
                                 k += 1
                         # checks if element does have a subscript
                         elif formula[k + 2].isnumeric():
-                            subelement = int(formula[k + 2])
+                            if k + 2 == formlen - 1 or not formula[k + 3].isnumeric():
+                                subelement = int(formula[k + 2])
+                            elif formula[k + 3].isnumeric():
+                                subelement = int(formula[k + 2:k + 4])
                             # checks if the element is within ()
                             if parencheck(k, 2, formlen, formula) == False:
                                 count += subelement
@@ -93,7 +100,10 @@ def main(formula, element):
                                 k += 1
                         # checks if element does have a subscript
                         elif formula[k + 1].isnumeric():
-                            subelement = int(formula[k + 1])
+                            if k + 1 == formlen - 1 or not formula[k + 2].isnumeric():
+                                subelement = int(formula[k + 1])
+                            elif formula[k + 2].isnumeric():
+                                subelement = int(formula[k + 1:k + 3])
                             # checks if the element is within ()
                             if parencheck(k, 1, formlen, formula) == False:
                                 count += subelement
@@ -115,7 +125,7 @@ def main(formula, element):
             elementmw = elementmw * count
             if elementmw == 0:
                 print("It seems that you have not chosen an element which is part of the formula.")
-                return -4
+                return -4, None
             else:
                 pbm = (elementmw / totalmw) * 100
                 pbm = round(pbm, 3)
