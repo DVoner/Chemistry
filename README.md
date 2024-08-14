@@ -9,9 +9,9 @@
     To use it, in the command line, when running main, type the molecular formula, then a space,
     then g or grams, then a space, then the number of moles you have.
   ### 3. Get moles:
-    This function gets the number of moles in a specified number of grams of the compound of your choice.
-    To use it, in the command line, when running main, type the molecular formula, then a space,
-    then m or moles, then a space, then the number of grams you have.
+    This function gets the number of moles in a specified number of grams of the compound of your 
+    choice. To use it, in the command line, when running main, type the molecular formula, then 
+    a space, then m or moles, then a space, then the number of grams you have.
   ### 4. Percent by mass:
     This function tells you what percent of the compound of your choice is made up of an element 
     of your choice (by mass). To use it, in the command line, when running main, type the molecular
