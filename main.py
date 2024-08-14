@@ -35,10 +35,10 @@ def main():
             if mw < 0:
                 return
             else:
-                if pbm.main(f"{sys.argv[1]}", f"{sys.argv[3]}") < 0:
+                percent, elementmw = pbm.main(f"{sys.argv[1]}", f"{sys.argv[3]}")
+                if percent < 0:
                     return
                 else:
-                    percent, elementmw = pbm.main(f"{sys.argv[1]}", f"{sys.argv[3]}")
                     percent = "{:.3f}".format(percent)
                     formulamw = improvedmw.main(f"{sys.argv[1]}")
                     formulamw = "{:.3f}".format(formulamw)
