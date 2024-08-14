@@ -14,3 +14,5 @@
     To use it, in the command line, when running main, type the molecular formila, then a space, then pbm, then a space, then the element for which you want the 
     percent by mass.
   #### Please note that with formulas that include ( ), you will have to surround the entire formula with quotation marks
+  #### The default molecular weights are set to values obtained from the IUPAC and NIH. If you would like the values from Tufts University, 
+  #### end your command line prompt with tufts or t.
