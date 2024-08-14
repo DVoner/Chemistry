@@ -38,8 +38,13 @@ def main(formula):
                 if formula[i] == "(":
                     starts.append(f"{i}")
                 elif formula[i] == ")":
-                    closes.append(f"{i + 1}")
-                    psubs.append(f"{int(formula[i + 1])}")
+                    if i + 1 == length - 1 or not formula[i + 2].isnumeric():
+                        closes.append(f"{i + 1}")
+                        psubs.append(f"{int(formula[i + 1])}")
+                    elif formula[i + 2].isnumeric():
+                        closes.append(f"{i + 2}")
+                        psubs.append(f"{int(formula[i + 1:i + 3])}")
+
 
         # we now have lists of where parentheses open, close, and the subscripts next to them
 
@@ -54,7 +59,7 @@ def main(formula):
                 while j >= int(starts[i]) and j < int(closes[i]):
 
                     #checks if element is 1 letter or if we're at the end of the formula
-                    if formula[j].isupper() and (j == length - 1 or formula[j + 1].isupper()):
+                    if formula[j].isupper() and (formula[j + 1] == ")" or formula[j + 1].isupper()):
                         with open('values.csv') as csvfile:
                             data = csv.reader(csvfile)
                             for row in data:
@@ -78,7 +83,11 @@ def main(formula):
                         j += 1
                     # checks if it is a subscript
                     elif formula[j].isnumeric():
-                        subscript = int(formula[j])
+                        # checks if the subscript is 1 or 2 digits
+                        if formula[j + 1].isnumeric():
+                            subscript = int(formula[j:j+2])
+                        else:
+                            subscript = int(formula[j])
                         if j == 0:
                             print("Sorry, this program only supports one molecular formula at a time without coefficients.")
                             return -4
@@ -105,6 +114,9 @@ def main(formula):
                                         valinside += element * subscript
                                         j += 1
                                         break
+                        elif formula[j - 1].isnumeric() or formula[j - 1] == ")":
+                            valinside += 0
+                            j += 1
 
 
                 # add to MW
@@ -136,7 +148,11 @@ def main(formula):
                     mw += 0
                 # checks if it is a subscript
                 elif formula[i].isnumeric():
-                    subscript = int(formula[i])
+                    # checks if the subscript is 1 or 2 digits
+                    if formula[i + 1].isnumeric():
+                        subscript = int(formula[i:i+2])
+                    else:
+                        subscript = int(formula[i])
                     if i == 0:
                         print("Sorry, this program only supports one molecular formula at a time without coefficients.")
                         return -4
@@ -161,6 +177,9 @@ def main(formula):
                                     element = float(row[1])
                                     mw += element * subscript
                                     break
+                    elif formula[i - 1].isnumeric():
+                        mw += 0
+
             j = int(closes[0]) + 1
             l = 1
             while l < opencount:
@@ -190,7 +209,11 @@ def main(formula):
                         j += 1
                     # checks if it is a subscript
                     elif formula[j].isnumeric():
-                        subscript = int(formula[j])
+                        # checks if the subscript is 1 or 2 digits
+                        if formula[j + 1].isnumeric():
+                            subscript = int(formula[j:j+2])
+                        else:
+                            subscript = int(formula[j])
                         # checks if it is a subscript of just a single one-letter element
                         if formula[j - 1].isalpha() and formula[j - 1].isupper():
                             with open('values.csv') as csvfile:
@@ -214,6 +237,9 @@ def main(formula):
                                         mw += element * subscript
                                         j += 1
                                         break
+                        elif formula[j].isnumeric():
+                            mw += 0
+                            j += 1
                 j = int(closes[l])
                 l += 1
             k = int(closes[closecount - 1]) + 1
@@ -242,7 +268,11 @@ def main(formula):
                     k += 1
                 # checks if it is a subscript
                 elif formula[k].isnumeric():
-                    subscript = int(formula[k])
+                    # checks if the subscript is 1 or 2 digits
+                    if k == length - 1 or not formula[k + 1].isnumeric():
+                        subscript = int(formula[k])
+                    elif formula[k + 1].isnumeric():
+                        subscript = int(formula[k:k+2])
                     # checks if it is a subscript of just a single one-letter element
                     if formula[k - 1].isalpha() and (formula[k - 1].isupper() or formula[k - 1] == "("):
                         with open('values.csv') as csvfile:
@@ -266,7 +296,9 @@ def main(formula):
                                     mw += element * subscript
                                     k += 1
                                     break
-
+                    elif formula[k - 1].isnumeric():
+                        mw += 0
+                        k += 1
 
 
         # if there are not parentheses
@@ -293,7 +325,10 @@ def main(formula):
                     mw += 0
                 # checks if it is a subscript
                 elif formula[i].isnumeric():
-                    subscript = int(formula[i])
+                    if i == length - 1 or not formula[i + 1].isnumeric():
+                        subscript = int(formula[i])
+                    elif formula[i + 1].isnumeric():
+                        subscript = int(formula[i:i + 2])
                     if i == 0:
                         print("Sorry, this program only supports one molecular formula at a time without coefficients.")
                         return -4
@@ -318,6 +353,8 @@ def main(formula):
                                     element = float(row[1])
                                     mw += element * subscript
                                     break
+                    elif formula[i - 1].isnumeric():
+                        mw += 0
         mw = round(mw, 3)
         if mw == 0:
             print("Invalid formula")
