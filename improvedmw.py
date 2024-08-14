@@ -1,11 +1,12 @@
 import csv
 
-def main(formula):
+def main(formula, lib):
     length = len(formula)
     mw, valinside, opencount, closecount = 0, 0, 0, 0
     starts = []
     closes = []
     psubs = []
+
 
     # check for ions
     if formula[length - 1] == "+" or formula[length - 1] == "-":
@@ -64,18 +65,24 @@ def main(formula):
                             data = csv.reader(csvfile)
                             for row in data:
                                 if row[0] == formula[j]:
-                                    valinside += float(row[1])
+                                    valinside += float(row[lib])
                                     j += 1
                                     break
+                                if row[0] == "error":
+                                    print("Invalid formula")
+                                    return -6
                     # checks if the element is 2 letters
                     elif formula[j].isupper() and formula[j + 1].islower():
                         with open('values.csv') as csvfile:
                             data = csv.reader(csvfile)
                             for row in data:
                                 if row[0] == formula[j:j+2]:
-                                    valinside += float(row[1])
+                                    valinside += float(row[lib])
                                     j += 1
                                     break
+                                if row[0] == "error":
+                                    print("Invalid formula")
+                                    return -6
                     # if it is lowercase or a parenthese or a number, don't do anything
                     # if the letter is lowercase then it is part of a two letter element, which has already been taken care of
                     elif formula[j].islower() or formula[j] == "(" or formula[j] == ")" or (formula[j].isupper() and formula[j+1].isnumeric()):
@@ -97,10 +104,13 @@ def main(formula):
                                 data = csv.reader(csvfile)
                                 for row in data:
                                     if row[0] == formula[j - 1]:
-                                        element = float(row[1])
+                                        element = float(row[lib])
                                         valinside += element * subscript
                                         j += 1
                                         break
+                                    if row[0] == "error":
+                                        print("Invalid formula")
+                                        return -6
                         # checks if it is a subscript of just a single two-letter element
                         elif formula[j - 1].isalpha() and formula[j - 1].islower():
                             with open('values.csv') as csvfile:
@@ -110,10 +120,13 @@ def main(formula):
                                     return -5
                                 for row in data:
                                     if row[0] == formula[(j - 2):(j)]:
-                                        element = float(row[1])
+                                        element = float(row[lib])
                                         valinside += element * subscript
                                         j += 1
                                         break
+                                    if row[0] == "error":
+                                        print("Invalid formula")
+                                        return -6
                         elif formula[j - 1].isnumeric() or formula[j - 1] == ")":
                             valinside += 0
                             j += 1
@@ -133,16 +146,22 @@ def main(formula):
                         data = csv.reader(csvfile)
                         for row in data:
                             if row[0] == formula[i]:
-                                mw += float(row[1])
+                                mw += float(row[lib])
                                 break
+                            if row[0] == "error":
+                                print("Invalid formula")
+                                return -6
                 # checks if the element is 2 letters
                 elif formula[i].isupper() and formula[i + 1].islower():
                     with open('values.csv') as csvfile:
                         data = csv.reader(csvfile)
                         for row in data:
                             if row[0] == formula[i:i+2]:
-                                mw += float(row[1])
+                                mw += float(row[lib])
                                 break
+                            if row[0] == "error":
+                                print("Invalid formula")
+                                return -6
                 # if the letter is lowercase then it is part of a two letter element, which has already been taken care of
                 elif formula[i].islower():
                     mw += 0
@@ -162,9 +181,12 @@ def main(formula):
                             data = csv.reader(csvfile)
                             for row in data:
                                 if row[0] == formula[i - 1]:
-                                    element = float(row[1])
+                                    element = float(row[lib])
                                     mw += element * subscript
                                     break
+                                if row[0] == "error":
+                                    print("Invalid formula")
+                                    return -6
                     # checks if it is a subscript of just a single two-letter element
                     elif formula[i - 1].isalpha() and formula[i - 1].islower():
                         with open('values.csv') as csvfile:
@@ -174,9 +196,12 @@ def main(formula):
                                 return -5
                             for row in data:
                                 if row[0] == formula[(i - 2):(i)]:
-                                    element = float(row[1])
+                                    element = float(row[lib])
                                     mw += element * subscript
                                     break
+                                if row[0] == "error":
+                                    print("Invalid formula")
+                                    return -6
                     elif formula[i - 1].isnumeric():
                         mw += 0
 
@@ -191,18 +216,24 @@ def main(formula):
                             data = csv.reader(csvfile)
                             for row in data:
                                 if row[0] == formula[j]:
-                                    mw += float(row[1])
+                                    mw += float(row[lib])
                                     j += 1
                                     break
+                                if row[0] == "error":
+                                    print("Invalid formula")
+                                    return -6
                     # checks if the element is 2 letters
                     elif formula[j].isupper() and formula[j + 1].islower() and (j == int(starts[l]) - 2 or formula[j + 1].isupper()):
                         with open('values.csv') as csvfile:
                             data = csv.reader(csvfile)
                             for row in data:
                                 if row[0] == formula[j:j+2]:
-                                    mw += float(row[1])
+                                    mw += float(row[lib])
                                     j += 1
                                     break
+                                if row[0] == "error":
+                                    print("Invalid formula")
+                                    return -6
                     # if the letter is lowercase then it is part of a two letter element, which has already been taken care of
                     elif formula[j].islower() or (formula[j].isupper() and formula[j + 1].isnumeric()) or (formula[j].isupper() and formula[j + 1].islower() and formula[j + 2].isnumeric()):
                         mw += 0
@@ -220,10 +251,13 @@ def main(formula):
                                 data = csv.reader(csvfile)
                                 for row in data:
                                     if row[0] == formula[j - 1]:
-                                        element = float(row[1])
+                                        element = float(row[lib])
                                         mw += element * subscript
                                         j += 1
                                         break
+                                    if row[0] == "error":
+                                        print("Invalid formula")
+                                        return -6
                         # checks if it is a subscript of just a single two-letter element
                         elif formula[j - 1].isalpha() and formula[j - 1].islower():
                             with open('values.csv') as csvfile:
@@ -233,10 +267,13 @@ def main(formula):
                                     return -5
                                 for row in data:
                                     if row[0] == formula[(j - 2):(j)]:
-                                        element = float(row[1])
+                                        element = float(row[lib])
                                         mw += element * subscript
                                         j += 1
                                         break
+                                    if row[0] == "error":
+                                        print("Invalid formula")
+                                        return -6
                         elif formula[j].isnumeric():
                             mw += 0
                             j += 1
@@ -250,18 +287,24 @@ def main(formula):
                         data = csv.reader(csvfile)
                         for row in data:
                             if row[0] == formula[k]:
-                                mw += float(row[1])
+                                mw += float(row[lib])
                                 k += 1
                                 break
+                            if row[0] == "error":
+                                print("Invalid formula")
+                                return -6
                 # checks if the element is 2 letters
                 elif formula[k].isupper() and formula[k + 1].islower() and (k == length - 2 or formula[k + 2].isupper()):
                     with open('values.csv') as csvfile:
                         data = csv.reader(csvfile)
                         for row in data:
                             if row[0] == formula[k:k+2]:
-                                mw += float(row[1])
+                                mw += float(row[lib])
                                 k += 1
                                 break
+                            if row[0] == "error":
+                                print("Invalid formula")
+                                return -6
                 # if the letter is lowercase then it is part of a two letter element, which has already been taken care of
                 elif formula[k].islower() or (formula[k].isupper() and formula[k + 1].isnumeric()) or (formula[k].isupper() and formula[k + 1].islower() and formula[k + 2].isnumeric()):
                     mw += 0
@@ -279,10 +322,13 @@ def main(formula):
                             data = csv.reader(csvfile)
                             for row in data:
                                 if row[0] == formula[k - 1]:
-                                    element = float(row[1])
+                                    element = float(row[lib])
                                     mw += element * subscript
                                     k += 1
                                     break
+                                if row[0] == "error":
+                                    print("Invalid formula")
+                                    return -6
                     # checks if it is a subscript of just a single two-letter element
                     elif formula[k - 1].isalpha() and formula[k - 1].islower():
                         with open('values.csv') as csvfile:
@@ -292,10 +338,13 @@ def main(formula):
                                 return -5
                             for row in data:
                                 if row[0] == formula[(k - 2):(k)]:
-                                    element = float(row[1])
+                                    element = float(row[lib])
                                     mw += element * subscript
                                     k += 1
                                     break
+                                if row[0] == "error":
+                                    print("Invalid formula")
+                                    return -6
                     elif formula[k - 1].isnumeric():
                         mw += 0
                         k += 1
@@ -310,16 +359,22 @@ def main(formula):
                         data = csv.reader(csvfile)
                         for row in data:
                             if row[0] == formula[i]:
-                                mw += float(row[1])
+                                mw += float(row[lib])
                                 break
+                            if row[0] == "error":
+                                print("Invalid formula")
+                                return -6
                 # checks if the element is 2 letters
                 elif formula[i].isupper() and formula[i + 1].islower() and (i + 1 == length - 1 or formula[i + 2].isalpha()):
                     with open('values.csv') as csvfile:
                         data = csv.reader(csvfile)
                         for row in data:
                             if row[0] == formula[i:i+2]:
-                                mw += float(row[1])
+                                mw += float(row[lib])
                                 break
+                            if row[0] == "error":
+                                print("Invalid formula")
+                                return -6
                 # if the letter is lowercase then it is part of a two letter element, which has already been taken care of
                 elif formula[i].islower():
                     mw += 0
@@ -338,9 +393,12 @@ def main(formula):
                             data = csv.reader(csvfile)
                             for row in data:
                                 if row[0] == formula[i - 1]:
-                                    element = float(row[1])
+                                    element = float(row[lib])
                                     mw += element * subscript
                                     break
+                                if row[0] == "error":
+                                    print("Invalid formula")
+                                    return -6
                     # checks if it is a subscript of just a single two-letter element
                     elif formula[i - 1].isalpha() and formula[i - 1].islower():
                         with open('values.csv') as csvfile:
@@ -350,9 +408,12 @@ def main(formula):
                                 return -5
                             for row in data:
                                 if row[0] == formula[(i - 2):(i)]:
-                                    element = float(row[1])
+                                    element = float(row[lib])
                                     mw += element * subscript
                                     break
+                                if row[0] == "error":
+                                    print("Invalid formula")
+                                    return -6
                     elif formula[i - 1].isnumeric():
                         mw += 0
         mw = round(mw, 3)
