@@ -25,7 +25,7 @@ def main():
                 gram = grams.main(f"{sys.argv[1]}", f"{int(sys.argv[3])}", 1)
                 gram = "{:.3f}".format(gram)
                 print(f"{gram} grams")
-        elif sys.argv[2].lower() == "moles" or sys.argv[2].lower == "m":
+        elif sys.argv[2].lower() == "moles" or sys.argv[2].lower() == "m":
             mw = improvedmw.main(f"{sys.argv[1]}", 1)
             if mw < 0:
                 return
@@ -71,7 +71,7 @@ def main():
                 gram = grams.main(f"{sys.argv[1]}", f"{int(sys.argv[3])}", 2)
                 gram = "{:.3f}".format(gram)
                 print(f"{gram} grams")
-        elif sys.argv[2].lower() == "moles" or sys.argv[2].lower == "m":
+        elif sys.argv[2].lower() == "moles" or sys.argv[2].lower() == "m":
             mw = improvedmw.main(f"{sys.argv[1]}", 1)
             if mw < 0:
                 return
